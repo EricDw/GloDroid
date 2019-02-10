@@ -18,8 +18,8 @@ abstract class Consumable {
     @Throws(IllegalStateException::class)
     fun consume() =
         when(_consumed) {
-            true -> _consumed = true
-            false -> throw IllegalStateException(
+            false -> _consumed = true
+            true -> throw IllegalStateException(
                 "$this has already been consumed"
             )
         }

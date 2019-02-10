@@ -11,7 +11,7 @@ import net.publicmethod.glodroid.viewmodels.StateViewModel
 
 class BoardsListFragment : Fragment() {
 
-    private val viewModel: StateViewModel by lazy {
+    private val viewModel: StateViewModel<BoardsListViewState> by lazy {
         ViewModelProviders.of(this)
             .get(BoardsListViewModel::class.java)
     }
