@@ -32,7 +32,6 @@
             android:autoVerify="true" />
         <argument
             android:name="code"
-            app:argType="string"
-            android:defaultValue='""' />
+            app:argType="string" />
     </fragment>
 </navigation>
