@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/boardsListFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -22,5 +22,9 @@
         android:id="@+id/boardsListFragment"
         android:name="net.publicmethod.glodroid.boards.BoardsListFragment"
         android:label="boards_list_fragment"
-        tools:layout="@layout/boards_list_fragment" />
+        tools:layout="@layout/boards_list_fragment" >
+        <action
+            android:id="@+id/action_boardsListFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>
