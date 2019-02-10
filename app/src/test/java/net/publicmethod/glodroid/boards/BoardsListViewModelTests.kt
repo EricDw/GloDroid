@@ -30,7 +30,7 @@ class BoardsListViewModelTests {
     fun `given Empty authCode when send then state contains consumable`() {
         // Arrange
         val input = HandleAuthenticationCode()
-        val expected = true
+        val expected = false
 
         // Act
         viewModel.send(input)

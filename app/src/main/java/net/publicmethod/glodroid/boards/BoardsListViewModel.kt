@@ -19,7 +19,7 @@ class BoardsListViewModel
     override fun send(command: ViewCommand) {
         when (command) {
             is HandleAuthenticationCode -> {
-                if (command.authenticationCode.isEmpty())
+                if (command.authenticationCode.isNotEmpty())
                     _state.value?.run {
                         _state.value = this.copy(
                             consumable = NavigateToLogin()
