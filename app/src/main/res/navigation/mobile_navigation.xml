@@ -28,7 +28,11 @@
             app:destination="@id/loginFragment" />
         <deepLink
             android:id="@+id/deepLink"
-            app:uri="net.publicmethod.glodroid/oauth/authorized"
+            app:uri="net.publicmethod.glodroid/oauth/authorized{code}"
             android:autoVerify="true" />
+        <argument
+            android:name="code"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 </navigation>
