@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import net.publicmethod.glodroid.R
+import net.publicmethod.glodroid.viewmodels.StateViewModel
 
 class BoardsListFragment : Fragment() {
 
-    private lateinit var viewModel: BoardsListViewModel
+    private val viewModel: StateViewModel by lazy {
+        ViewModelProviders.of(this)
+            .get(BoardsListViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,9 +25,10 @@ class BoardsListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val authCode = arguments?.run {
+            BoardsListFragmentArgs.fromBundle(this).code
+        } ?: ""
 
-        viewModel = ViewModelProviders.of(this).get(BoardsListViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }
