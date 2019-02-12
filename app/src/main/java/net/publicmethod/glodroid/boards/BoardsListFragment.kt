@@ -35,6 +35,8 @@ class BoardsListFragment : Fragment() {
 
         viewModel.state.observe(this, Observer(this::render))
 
+        viewModel.send(Initialize())
+
     }
 
     private fun render(state: BoardsListViewState?) {
