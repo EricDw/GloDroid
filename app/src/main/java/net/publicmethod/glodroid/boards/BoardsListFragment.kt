@@ -8,16 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.boards_list_fragment.*
 import net.publicmethod.glodroid.R
 import net.publicmethod.glodroid.viewmodels.StateViewModel
+import net.publicmethod.glodroid.viewmodels.ViewModelFactoryImpl
 
 class BoardsListFragment : Fragment() {
 
     private val viewModel: StateViewModel<BoardsListViewState, BoardsListCommands> by lazy {
-        ViewModelProviders.of(this)
+        ViewModelProviders.of(this, ViewModelFactoryImpl())
             .get(BoardsListViewModel::class.java)
     }
 
@@ -42,6 +40,14 @@ class BoardsListFragment : Fragment() {
     private fun render(state: BoardsListViewState?) {
         state?.run {
             when (consumable) {
+                is Empty -> {}
+
+                is NavigateToDebugLogin -> {
+                    if (!consumable.consumed)
+                        view?.findNavController()
+                            ?.navigate(R.id.action_boardsListFragment_to_debugLoginFragment)
+                }
+
                 is NavigateToLogin ->
                     if (!consumable.consumed)
                         consumable.consume().also {
