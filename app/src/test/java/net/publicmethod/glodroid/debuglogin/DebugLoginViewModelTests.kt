@@ -1,12 +1,10 @@
 package net.publicmethod.glodroid.debuglogin
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import net.publicmethod.glodroid.PersonalAuthenticationToken
-import net.publicmethod.glodroid.TestUserCache
-import net.publicmethod.glodroid.UserCache
+import net.publicmethod.glodroid.*
 import net.publicmethod.glodroid.debuglogin.DebugLoginConsumable.*
-import net.publicmethod.glodroid.generateValidPersonalAuthenticationTokenString
 import net.publicmethod.glodroid.viewmodels.StateViewModel
+import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert
 import org.junit.Before
 
@@ -16,6 +14,12 @@ import org.junit.Test
 class DebugLoginViewModelTests {
 
     private lateinit var userCache: UserCache
+
+    private lateinit var mockWebServer: MockWebServer
+
+    private lateinit var gloService: GloService
+
+    private lateinit var gloRepository: GloRepository
 
     private lateinit var viewModel: StateViewModel<DebugLoginViewState, DebugLoginCommand>
 
@@ -28,7 +32,12 @@ class DebugLoginViewModelTests {
     @Before
     fun setUp() {
         userCache = TestUserCache()
-        viewModel = DebugLoginViewModel(userCache)
+        mockWebServer = MockWebServer()
+        gloService = TestGloService(
+            mockWebServer
+        )
+        gloRepository = GloRepositoryImpl(gloService)
+        viewModel = DebugLoginViewModel(userCache, gloRepository)
         viewModel.state.observeForever {
             actualState = it
         }
@@ -81,6 +90,7 @@ class DebugLoginViewModelTests {
         // Act
         viewModel.send(input)
         val actual = actualState
+        mockWebServer.shutdown()
 
         // Assert
         Assert.assertEquals(expected, actual)
