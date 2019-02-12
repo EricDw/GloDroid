@@ -5,5 +5,6 @@ import net.publicmethod.glodroid.viewmodels.ViewState
 
 data class BoardsListViewState(
     val authCode: String = "",
-    val consumable: Consumable = Empty()
+    val consumable: Consumable = Empty(),
+    val showLoading: Boolean = false
 ): ViewState

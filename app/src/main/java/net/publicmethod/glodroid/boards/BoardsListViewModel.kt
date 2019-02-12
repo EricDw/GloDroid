@@ -13,7 +13,7 @@ class BoardsListViewModel(
 
     private val _state: MutableLiveData<BoardsListViewState> =
         MutableLiveData<BoardsListViewState>().apply {
-            value = BoardsListViewState()
+            value = BoardsListViewState(showLoading = true)
         }
 
     override val state: LiveData<BoardsListViewState> = _state
@@ -28,13 +28,22 @@ class BoardsListViewModel(
     }
 
     private fun processInitializeCommand(command: Initialize) {
-        if (!userCache.isUserLoggedIn)
+        if (userCache.isUserLoggedIn) {
+            _state.value?.run {
+                if (command.buildType == "debug")
+                    _state.value = copy(
+                        consumable =  Empty(),
+                        showLoading = true
+                    )
+            }
+        } else {
             _state.value?.run {
                 if (command.buildType == "debug")
                     _state.value = copy(
                         consumable = NavigateToDebugLogin()
                     )
             }
+        }
     }
 
     private fun processHandleAuthenticationCodeCommand(command: HandleAuthenticationCode) {

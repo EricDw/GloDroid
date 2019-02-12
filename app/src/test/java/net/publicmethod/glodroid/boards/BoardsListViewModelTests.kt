@@ -1,8 +1,10 @@
 package net.publicmethod.glodroid.boards
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import net.publicmethod.glodroid.PersonalAuthenticationToken
 import net.publicmethod.glodroid.TestUserCache
 import net.publicmethod.glodroid.UserCache
+import net.publicmethod.glodroid.VALID_PAT_LENGTH
 import net.publicmethod.glodroid.viewmodels.StateViewModel
 import org.junit.Assert
 import org.junit.Before
@@ -60,7 +62,6 @@ class BoardsListViewModelTests {
         Assert.assertEquals(expected, actual)
     }
 
-
     @Test
     fun `given no PAT when sending Initialize then state contains NavigateToDebugLogin`() {
         // Arrange
@@ -70,6 +71,31 @@ class BoardsListViewModelTests {
         // Act
         viewModel.send(input)
         val actual = actualState.consumable
+
+        // Assert
+        Assert.assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `given valid PAT when sending Initialize then showLoading is true`() {
+        // Arrange
+        val personalAuthenticationToken = PersonalAuthenticationToken(
+            {
+                var result = ""
+                repeat((0..VALID_PAT_LENGTH).count()) { result += 1 }
+                result
+            }()
+        )
+        userCache.personalAuthenticationToken = personalAuthenticationToken
+
+        val input = Initialize()
+        val expected = BoardsListViewState(
+            showLoading = true
+        )
+
+        // Act
+        viewModel.send(input)
+        val actual = actualState
 
         // Assert
         Assert.assertEquals(expected, actual)
