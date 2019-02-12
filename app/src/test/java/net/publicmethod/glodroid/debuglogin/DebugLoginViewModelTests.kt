@@ -3,6 +3,7 @@ package net.publicmethod.glodroid.debuglogin
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import net.publicmethod.glodroid.TestUserCache
 import net.publicmethod.glodroid.UserCache
+import net.publicmethod.glodroid.generateValidPersonalAuthenticationToken
 import net.publicmethod.glodroid.viewmodels.StateViewModel
 import org.junit.Assert
 import org.junit.Before
@@ -36,6 +37,24 @@ class DebugLoginViewModelTests {
         // Arrange
         val input = ValidateToken("")
         val expected = DebugLoginViewState()
+
+        // Act
+        viewModel.send(input)
+        val actual = actualState
+
+        // Assert
+        Assert.assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `given valid PAT when send ValidateToken then isLoginButtonEnabled is true`() {
+        // Arrange
+        val input = ValidateToken(
+            generateValidPersonalAuthenticationToken()
+        )
+        val expected = DebugLoginViewState(
+            isLoginButtonEnabled = true
+        )
 
         // Act
         viewModel.send(input)
