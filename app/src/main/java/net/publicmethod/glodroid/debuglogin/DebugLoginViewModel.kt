@@ -21,7 +21,7 @@ class DebugLoginViewModel(
 
     override fun send(command: DebugLoginCommand) {
         when (command) {
-            is ValidateToken -> {
+            is ValidateTokenCommand -> {
                 PersonalAuthenticationToken(command.tokenInput).run {
                     _state.value?.run {
                         _state.value = copy(

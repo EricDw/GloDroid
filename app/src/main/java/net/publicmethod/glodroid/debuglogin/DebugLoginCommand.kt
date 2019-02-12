@@ -4,6 +4,6 @@ import net.publicmethod.glodroid.ViewCommand
 
 sealed class DebugLoginCommand : ViewCommand
 
-data class ValidateToken(
+data class ValidateTokenCommand(
     val tokenInput: String
 ): DebugLoginCommand()

@@ -35,7 +35,7 @@ class DebugLoginViewModelTests {
     @Test
     fun `given invalid PAT when send ValidateToken then isLoginButtonEnabled is false`() {
         // Arrange
-        val input = ValidateToken("")
+        val input = ValidateTokenCommand("")
         val expected = DebugLoginViewState()
 
         // Act
@@ -49,7 +49,7 @@ class DebugLoginViewModelTests {
     @Test
     fun `given valid PAT when send ValidateToken then isLoginButtonEnabled is true`() {
         // Arrange
-        val input = ValidateToken(
+        val input = ValidateTokenCommand(
             generateValidPersonalAuthenticationToken()
         )
         val expected = DebugLoginViewState(

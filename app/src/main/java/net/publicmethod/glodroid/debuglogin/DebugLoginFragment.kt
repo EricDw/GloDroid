@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.debug_login_fragment.*
 
 import net.publicmethod.glodroid.R
 import net.publicmethod.glodroid.viewmodels.ViewModelFactoryImpl
@@ -32,6 +34,12 @@ class DebugLoginFragment : Fragment() {
         ).get(DebugLoginViewModel::class.java)
 
         viewModel.state.observe(this, Observer(this::renderDetailsFor))
+
+        textInputEditText_personalAuthenticationToken.doAfterTextChanged {
+            it?.toString()?.run {
+                viewModel.send(ValidateTokenCommand(this))
+            }
+        }
 
     }
 
