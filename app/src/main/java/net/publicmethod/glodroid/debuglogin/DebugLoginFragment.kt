@@ -11,10 +11,6 @@ import net.publicmethod.glodroid.R
 
 class DebugLoginFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = DebugLoginFragment()
-    }
-
     private lateinit var viewModel: DebugLoginViewModel
 
     override fun onCreateView(
