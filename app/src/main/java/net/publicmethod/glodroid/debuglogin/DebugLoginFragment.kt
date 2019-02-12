@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 
 import net.publicmethod.glodroid.R
+import net.publicmethod.glodroid.viewmodels.ViewModelFactoryImpl
 
 class DebugLoginFragment : Fragment() {
 
@@ -24,18 +26,33 @@ class DebugLoginFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        activity?.fab?.run {
+        viewModel = ViewModelProviders.of(
+            this,
+            ViewModelFactoryImpl()
+        ).get(DebugLoginViewModel::class.java)
 
-            setImageResource(R.drawable.ic_key_white_24dp)
+        viewModel.state.observe(this, Observer(this::renderDetailsFor))
 
-            setOnClickListener {
-                // Send login command
+    }
+
+    private fun renderDetailsFor(aViewState: DebugLoginViewState?) {
+        aViewState?.run {
+
+            activity?.fab?.run {
+
+                isEnabled = isLoginButtonEnabled
+
+                setImageResource(
+                    R.drawable.ic_lock_open_white_24dp.takeIf { isLoginButtonEnabled }
+                        ?: R.drawable.ic_lock_white_24dp
+                )
+
+                setOnClickListener {
+                    // Send login command
+
+                }
             }
         }
-
-
-        viewModel = ViewModelProviders.of(this).get(DebugLoginViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

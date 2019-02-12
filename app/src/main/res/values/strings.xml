@@ -2,4 +2,5 @@
     <string name="app_name">GloDroid</string>
     <string name="action_settings">Settings</string>
     <string name="hint_personal_authentication_token">Personal Authentication Token</string>
+    <string name="content_decription_image_of_a_black_key">Image of a black key</string>
 </resources>
