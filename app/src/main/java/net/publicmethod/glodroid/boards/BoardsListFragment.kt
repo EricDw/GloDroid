@@ -8,13 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.boards_list_fragment.*
 import net.publicmethod.glodroid.R
 import net.publicmethod.glodroid.viewmodels.StateViewModel
 
 class BoardsListFragment : Fragment() {
 
-    private val viewModel: StateViewModel<BoardsListViewState> by lazy {
+    private val viewModel: StateViewModel<BoardsListViewState, BoardsListCommands> by lazy {
         ViewModelProviders.of(this)
             .get(BoardsListViewModel::class.java)
     }
@@ -23,7 +25,11 @@ class BoardsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.boards_list_fragment, container, false)
+        return inflater.inflate(
+            R.layout.boards_list_fragment,
+            container,
+            false
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -31,13 +37,7 @@ class BoardsListFragment : Fragment() {
 
         viewModel.state.observe(this, Observer(this::render))
 
-        val authCode = arguments?.run {
-            BoardsListFragmentArgs.fromBundle(this).code
-        } ?: ""
-
-        textView.text = authCode
-
-        viewModel.send(HandleAuthenticationCode(authCode))
+//        viewModel.send(HandleAuthenticationCode(authCode))
 
     }
 

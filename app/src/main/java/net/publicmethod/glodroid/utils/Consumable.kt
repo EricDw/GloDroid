@@ -12,16 +12,34 @@ abstract class Consumable {
         get() = _consumed
 
     /**
-    * Sets [Consumable.consumed] to true
+     * Sets [Consumable.consumed] to true
      * @throws [IllegalStateException] if called more then once.
      **/
     @Throws(IllegalStateException::class)
     fun consume() =
-        when(_consumed) {
+        when (_consumed) {
             false -> _consumed = true
             true -> throw IllegalStateException(
                 "$this has already been consumed"
             )
         }
+
+    override fun equals(other: Any?): Boolean {
+        return (other != null
+                && isSameType(other)
+                && other is Consumable
+                && other.consumed == consumed)
+    }
+
+    override fun hashCode(): Int {
+        return "$consumed$javaClass".hashCode()
+    }
+
+    override fun toString(): String {
+        return "${this.javaClass.canonicalName} \n" +
+                "consumed = $consumed"
+    }
+
+    abstract fun isSameType(other: Any): Boolean
 
 }

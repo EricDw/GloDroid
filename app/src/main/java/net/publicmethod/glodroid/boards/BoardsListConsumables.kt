@@ -2,12 +2,23 @@ package net.publicmethod.glodroid.boards
 
 import net.publicmethod.glodroid.utils.Consumable
 
-sealed class BoardsListConsumable: Consumable()
+sealed class BoardsListConsumable : Consumable()
 
 class Empty : BoardsListConsumable() {
     init {
         consume()
     }
+
+    override fun isSameType(other: Any): Boolean =
+        other is Empty
 }
 
-class NavigateToLogin : BoardsListConsumable()
+class NavigateToDebugLogin : BoardsListConsumable() {
+    override fun isSameType(other: Any): Boolean =
+        other is NavigateToDebugLogin
+}
+
+class NavigateToLogin : BoardsListConsumable() {
+    override fun isSameType(other: Any): Boolean =
+        other is NavigateToLogin
+}
