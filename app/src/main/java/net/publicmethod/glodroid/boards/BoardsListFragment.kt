@@ -37,8 +37,6 @@ class BoardsListFragment : Fragment() {
 
         viewModel.state.observe(this, Observer(this::render))
 
-//        viewModel.send(HandleAuthenticationCode(authCode))
-
     }
 
     private fun render(state: BoardsListViewState?) {
