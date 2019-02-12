@@ -7,3 +7,5 @@ sealed class DebugLoginCommand : ViewCommand
 data class ValidateTokenCommand(
     val tokenInput: String
 ): DebugLoginCommand()
+
+object AttemptLogin : DebugLoginCommand()

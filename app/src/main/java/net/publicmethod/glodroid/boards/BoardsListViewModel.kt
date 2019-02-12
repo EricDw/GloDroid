@@ -32,7 +32,7 @@ class BoardsListViewModel(
             _state.value?.run {
                 if (command.buildType == "debug")
                     _state.value = copy(
-                        consumable =  Empty(),
+                        consumable = BoardsListConsumable.Empty,
                         showLoading = true
                     )
             }

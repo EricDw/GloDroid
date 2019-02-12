@@ -14,7 +14,7 @@ class DebugLoginViewModel(
 
     private val _state: MutableLiveData<DebugLoginViewState> =
         MutableLiveData<DebugLoginViewState>().apply {
-           value = DebugLoginViewState()
+            value = DebugLoginViewState(consumable = DebugLoginConsumable.Empty)
         }
 
     override val state: LiveData<DebugLoginViewState> = _state

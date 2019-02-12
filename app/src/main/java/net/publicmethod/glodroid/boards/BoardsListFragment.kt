@@ -42,7 +42,7 @@ class BoardsListFragment : Fragment() {
     private fun render(state: BoardsListViewState?) {
         state?.run {
             when (consumable) {
-                is Empty -> {}
+                is BoardsListConsumable.Empty -> {}
 
                 is NavigateToDebugLogin -> {
                     if (!consumable.consumed)

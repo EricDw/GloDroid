@@ -35,7 +35,7 @@ class BoardsListViewModelTests {
     fun `given Empty authCode when send then state contains consumable`() {
         // Arrange
         val input = HandleAuthenticationCode()
-        val expected = Empty()
+        val expected = BoardsListConsumable.Empty
 
         // Act
         viewModel.send(input)
@@ -77,7 +77,7 @@ class BoardsListViewModelTests {
     fun `given valid PAT when sending Initialize then showLoading is true`() {
         // Arrange
         val personalAuthenticationToken = PersonalAuthenticationToken(
-            generateValidPersonalAuthenticationToken()
+            generateValidPersonalAuthenticationTokenString()
         )
         userCache.personalAuthenticationToken = personalAuthenticationToken
 
