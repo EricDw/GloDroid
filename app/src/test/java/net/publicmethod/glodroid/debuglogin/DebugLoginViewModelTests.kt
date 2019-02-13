@@ -1,15 +1,17 @@
 package net.publicmethod.glodroid.debuglogin
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import net.publicmethod.glodroid.*
-import net.publicmethod.glodroid.debuglogin.DebugLoginConsumable.*
+import net.publicmethod.glodroid.boards.NavigateToDebugLogin
+import net.publicmethod.glodroid.debuglogin.DebugLoginConsumable.Empty
+import net.publicmethod.glodroid.scopes.IOScope
+import net.publicmethod.glodroid.scopes.UIScope
 import net.publicmethod.glodroid.viewmodels.StateViewModel
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.Assert
-import org.junit.Before
-
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
+import kotlin.coroutines.CoroutineContext
 
 class DebugLoginViewModelTests {
 
@@ -29,6 +31,7 @@ class DebugLoginViewModelTests {
     @JvmField
     val rule = InstantTaskExecutorRule()
 
+    @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
         userCache = TestUserCache()
@@ -37,10 +40,27 @@ class DebugLoginViewModelTests {
             mockWebServer
         )
         gloRepository = GloRepositoryImpl(gloService)
-        viewModel = DebugLoginViewModel(userCache, gloRepository)
+        viewModel = DebugLoginViewModel(
+            userCache,
+            gloRepository,
+            object : IOScope {
+                override val coroutineContext: CoroutineContext =
+                    Dispatchers.Unconfined
+            },
+            object : UIScope {
+                override val coroutineContext: CoroutineContext =
+                    Dispatchers.Unconfined
+            }
+
+        )
         viewModel.state.observeForever {
             actualState = it
         }
+    }
+
+    @After
+    fun tearDown() {
+        mockWebServer.shutdown()
     }
 
     @Test
@@ -90,7 +110,7 @@ class DebugLoginViewModelTests {
         // Act
         viewModel.send(input)
         val actual = actualState
-        mockWebServer.shutdown()
+
 
         // Assert
         Assert.assertEquals(expected, actual)

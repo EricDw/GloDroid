@@ -1,9 +1,11 @@
 package net.publicmethod.glodroid
 
-import retrofit2.Call
+import kotlinx.coroutines.Deferred
+import retrofit2.Response
 
 interface GloService {
-    fun getUserWithPersonalAuthenticationToken(
+   suspend fun getUserWithPersonalAuthenticationTokenAsync(
         personalAuthenticationToken: String
-    ): Call<GloUserDTO?>
+       // TODO: 2019-02-12 - Do not return a nullable GloUserDTO instead handle errors correctly with a Result object
+    ): Deferred<Response<GloUserDTO?>>
 }

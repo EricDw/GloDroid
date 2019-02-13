@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.debug_login_fragment.*
 
@@ -28,16 +29,19 @@ class DebugLoginFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(
-            this,
-            ViewModelFactoryImpl()
-        ).get(DebugLoginViewModel::class.java)
+        context?.run {
 
-        viewModel.state.observe(this, Observer(this::renderDetailsFor))
+            viewModel = ViewModelProviders.of(
+                this@DebugLoginFragment,
+                ViewModelFactoryImpl(this)
+            ).get(DebugLoginViewModel::class.java)
 
-        textInputEditText_personalAuthenticationToken.doAfterTextChanged {
-            it?.toString()?.run {
-                viewModel.send(ValidateTokenCommand(this))
+            viewModel.state.observe(this@DebugLoginFragment, Observer(::renderDetailsFor))
+
+            textInputEditText_personalAuthenticationToken.doAfterTextChanged {
+                it?.toString()?.run {
+                    viewModel.send(ValidateTokenCommand(this))
+                }
             }
         }
 
@@ -48,6 +52,15 @@ class DebugLoginFragment : Fragment() {
 
             activity?.fab?.run {
 
+                when (consumable) {
+                    is NavigateToBoardsList -> {
+                        findNavController().navigate(
+                            R.id.action_debugLoginFragment_to_boardsListFragment
+                        )
+                    }
+                    DebugLoginConsumable.Empty -> {}
+                }
+
                 isEnabled = isLoginButtonEnabled
 
                 setImageResource(
@@ -56,8 +69,7 @@ class DebugLoginFragment : Fragment() {
                 )
 
                 setOnClickListener {
-                    // Send login command
-
+                    viewModel.send(AttemptLogin)
                 }
             }
         }

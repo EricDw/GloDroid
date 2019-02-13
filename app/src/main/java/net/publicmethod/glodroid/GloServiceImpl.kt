@@ -1,10 +1,15 @@
 package net.publicmethod.glodroid
 
-import retrofit2.Call
+import kotlinx.coroutines.Deferred
+import net.publicmethod.glodroid.apis.GloAPIFactory
+import retrofit2.Response
 
 class GloServiceImpl : GloService {
 
-    override fun getUserWithPersonalAuthenticationToken(personalAuthenticationToken: String): Call<GloUserDTO?> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private val gloAPI = GloAPIFactory.gloAPI
+
+    override suspend fun getUserWithPersonalAuthenticationTokenAsync(
+        personalAuthenticationToken: String
+    ): Deferred<Response<GloUserDTO?>> =
+        gloAPI.getUserAsync(personalAuthenticationToken)
 }

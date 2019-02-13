@@ -1,7 +1,7 @@
 package net.publicmethod.glodroid
 
 interface GloRepository {
-    fun getUserFor(
+    suspend fun getUserFor(
         personalAuthenticationToken: PersonalAuthenticationToken
     ): GloUserDTO?
 }

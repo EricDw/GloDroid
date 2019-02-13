@@ -32,7 +32,7 @@ abstract class Consumable {
     }
 
     override fun hashCode(): Int {
-        return "$consumed$javaClass".hashCode()
+        return "$consumed${javaClass.canonicalName}".hashCode()
     }
 
     override fun toString(): String {

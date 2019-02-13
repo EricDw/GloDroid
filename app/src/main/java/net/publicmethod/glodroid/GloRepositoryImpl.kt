@@ -4,12 +4,10 @@ class GloRepositoryImpl(
     private val gloService: GloService
 ) : GloRepository {
 
-    override fun getUserFor(personalAuthenticationToken: PersonalAuthenticationToken): GloUserDTO? {
-
-        val user = gloService.getUserWithPersonalAuthenticationToken(
+    override suspend fun getUserFor(personalAuthenticationToken: PersonalAuthenticationToken): GloUserDTO? {
+        return gloService.getUserWithPersonalAuthenticationTokenAsync(
             personalAuthenticationToken.value
-        ).execute().body()
-        return user
+        ).await().body()
     }
 
 }
