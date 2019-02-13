@@ -2,10 +2,7 @@
 
 package net.publicmethod.glodroid
 
-import net.publicmethod.glodroid.apis.GLO_BASE_URL
-import net.publicmethod.glodroid.apis.GLO_USER_ENDPOINT
 import net.publicmethod.glodroid.apis.GloAPI
-import net.publicmethod.glodroid.apis.GloAPIFactory
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
