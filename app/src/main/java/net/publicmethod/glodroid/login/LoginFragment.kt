@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.login_fragment.*
-import net.publicmethod.glodroid.GLO_APP_CLIENT_ID
 import net.publicmethod.glodroid.R
 
 class LoginFragment : Fragment() {
